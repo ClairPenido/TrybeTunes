@@ -1,14 +1,14 @@
 import { React, Component } from 'react';
 // import { Redirect } from 'react-router-dom';
 
-class Login extends Component {
+class Album extends Component {
   render() {
     return (
-      <div data-testid="page-login">
-        <h2>Login</h2>
+      <div data-testid="page-album">
+        <h2>Album</h2>
       </div>
     );
   }
 }
 
-export default Login;
+export default Album;

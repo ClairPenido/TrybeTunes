@@ -1,14 +1,14 @@
 import { React, Component } from 'react';
 // import { Redirect } from 'react-router-dom';
 
-class Login extends Component {
+class Favorites extends Component {
   render() {
     return (
-      <div data-testid="page-login">
-        <h2>Login</h2>
+      <div data-testid="page-favorites">
+        <h2>Favorites</h2>
       </div>
     );
   }
 }
 
-export default Login;
+export default Favorites;
