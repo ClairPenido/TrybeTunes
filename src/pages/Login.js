@@ -34,32 +34,30 @@ state = {
 
   render() {
     const { inputName, isSendButtonDisabled, loading, redirect } = this.state;
-    // const loadingMessage = <h1>Loading...</h1>;
     return (
       <div data-testid="page-login">
-        <h2>Login</h2>
-        <form>
-          <label htmlFor="name-input">
-            Nome:
-            <input
-              value={ inputName }
-              onChange={ this.onInputChange }
-              type="text"
-              data-testid="login-name-input"
-            />
-          </label>
-          <button
-            type="button"
-            disabled={ isSendButtonDisabled }
-            onClick={ this.saveName }
-            data-testid="login-submit-button"
-          >
-            Entrar
-
-          </button>
-        </form>
+        { loading
+          ? <Loading />
+          : <form>
+            <label htmlFor="name-input">
+              Nome:
+              <input
+                value={ inputName }
+                onChange={ this.onInputChange }
+                type="text"
+                data-testid="login-name-input"
+              />
+            </label>
+            <button
+              type="button"
+              disabled={ isSendButtonDisabled }
+              onClick={ this.saveName }
+              data-testid="login-submit-button"
+            >
+              Entrar
+            </button>
+          </form> }
         {/* Sempre que for TRUE, faz o comando */}
-        { loading && <Loading />}
         { redirect && <Redirect to="/search" />}
       </div>
     );
