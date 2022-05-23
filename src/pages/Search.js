@@ -1,10 +1,11 @@
 import { React, Component } from 'react';
-// import { Redirect } from 'react-router-dom';
+import Header from './Header';
 
 class Search extends Component {
   render() {
     return (
       <div data-testid="page-search">
+        <Header />
         <h2>Search</h2>
       </div>
     );
