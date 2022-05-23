@@ -1,20 +1,31 @@
 import React from 'react';
-// import { Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
+import Loading from './Loading';
+import { createUser } from '../services/userAPI';
 
 class Login extends React.Component {
 state = {
-  nameInput: '',
+  inputName: '',
   isSendButtonDisabled: true,
+  loading: false,
+  redirect: false,
 };
 
   onInputChange = (event) => {
-    this.setState({ nameInput: event.target.value }, () => this.verificaQuantNameInput());
+    this.setState({ inputName: event.target.value }, () => this.verificaQuantNameInput());
   }
 
+   saveName = async () => {
+     const { inputName } = this.state;
+     this.setState({ loading: true });
+     await createUser({ name: inputName }); // esperando a criação
+     this.setState({ loading: false, redirect: true });
+   }
+
   verificaQuantNameInput = () => {
-    const { nameInput } = this.state;
+    const { inputName } = this.state;
     const numCaracMin = 3;
-    if (nameInput.length >= numCaracMin) {
+    if (inputName.length >= numCaracMin) {
       this.setState({ isSendButtonDisabled: false });
     } else {
       this.setState({ isSendButtonDisabled: true });
@@ -22,7 +33,8 @@ state = {
   };
 
   render() {
-    const { nameInput, isSendButtonDisabled } = this.state;
+    const { inputName, isSendButtonDisabled, loading, redirect } = this.state;
+    // const loadingMessage = <h1>Loading...</h1>;
     return (
       <div data-testid="page-login">
         <h2>Login</h2>
@@ -30,7 +42,7 @@ state = {
           <label htmlFor="name-input">
             Nome:
             <input
-              value={ nameInput }
+              value={ inputName }
               onChange={ this.onInputChange }
               type="text"
               data-testid="login-name-input"
@@ -39,12 +51,16 @@ state = {
           <button
             type="button"
             disabled={ isSendButtonDisabled }
+            onClick={ this.saveName }
             data-testid="login-submit-button"
           >
             Entrar
 
           </button>
         </form>
+        {/* Sempre que for TRUE, faz o comando */}
+        { loading && <Loading />}
+        { redirect && <Redirect to="/search" />}
       </div>
     );
   }
