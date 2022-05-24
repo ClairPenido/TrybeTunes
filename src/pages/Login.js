@@ -38,25 +38,26 @@ state = {
       <div data-testid="page-login">
         { loading
           ? <Loading />
-          : <form>
-            <label htmlFor="name-input">
-              Nome:
-              <input
-                value={ inputName }
-                onChange={ this.onInputChange }
-                type="text"
-                data-testid="login-name-input"
-              />
-            </label>
-            <button
-              type="button"
-              disabled={ isSendButtonDisabled }
-              onClick={ this.saveName }
-              data-testid="login-submit-button"
-            >
-              Entrar
-            </button>
-          </form> }
+          : (
+            <form>
+              <label htmlFor="name-input">
+                Nome:
+                <input
+                  value={ inputName }
+                  onChange={ this.onInputChange }
+                  type="text"
+                  data-testid="login-name-input"
+                />
+              </label>
+              <button
+                type="button"
+                disabled={ isSendButtonDisabled }
+                onClick={ this.saveName }
+                data-testid="login-submit-button"
+              >
+                Entrar
+              </button>
+            </form>)}
         {/* Sempre que for TRUE, faz o comando */}
         { redirect && <Redirect to="/search" />}
       </div>
