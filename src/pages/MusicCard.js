@@ -1,6 +1,6 @@
 import { React, Component } from 'react';
 import PropTypes from 'prop-types';
-import { addSong } from '../services/favoriteSongsAPI';
+import { addSong, getFavoriteSongs } from '../services/favoriteSongsAPI';
 import Loading from './Loading';
 
 class MusicCard extends Component {
@@ -9,25 +9,37 @@ class MusicCard extends Component {
     isChecked: false,
   };
 
+  componentDidMount() {
+    this.confirmaFavoritas();
+  }
+
+  confirmaFavoritas = async () => {
+    const { musica } = this.props;
+    const returnFavoritas = await getFavoriteSongs();
+    if (returnFavoritas.some((favorita) => favorita.trackId === musica.trackId)) { // avalia se a musica mostrada é igual a musica que está favoritada
+      return this.setState({ isChecked: true });
+    }
+  }
+
   adicionaMusicaFavorita = async () => {
-    const { musicas } = this.props;
+    const { musica } = this.props;
     this.setState({ loading: true });
-    await addSong(musicas);
+    await addSong(musica);
     this.setState({ loading: false, isChecked: true });
   };
 
   render() {
-    const { musicas } = this.props;
+    const { musica } = this.props;
     const { loading, isChecked } = this.state;
     return (
       <div>
         { loading ? (<Loading />) : (
           <div>
             <p>
-              { musicas.trackName }
+              { musica.trackName }
             </p>
             <p>
-              <audio data-testid="audio-component" src={ musicas.previewUrl } controls>
+              <audio data-testid="audio-component" src={ musica.previewUrl } controls>
                 <track kind="captions" />
                 O seu navegador não suporta o elemento
                 {' '}
@@ -36,11 +48,11 @@ class MusicCard extends Component {
               </audio>
             </p>
             <div>
-              <label htmlFor={ musicas.trackId }>
+              <label htmlFor={ musica.trackId }>
                 Favorita
                 <input
-                  id={ musicas.trackId }
-                  data-testid={ `checkbox-music-${musicas.trackId}` }
+                  id={ musica.trackId }
+                  data-testid={ `checkbox-music-${musica.trackId}` }
                   type="checkbox"
                   checked={ isChecked }
                   onChange={ this.adicionaMusicaFavorita }
@@ -55,7 +67,8 @@ class MusicCard extends Component {
   }
 }
 MusicCard.propTypes = {
-  musicas: PropTypes.string.isRequired,
+  musica: PropTypes.string.isRequired,
+
 };
 
 export default MusicCard;

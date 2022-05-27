@@ -8,8 +8,8 @@ import Loading from './Loading';
 class Album extends Component { //* primeiro elemento do array é diferente, usar filter ou slice
   state = {
     arrayMusics: [],
-    hasMusics: false,
     arrayMusicsCerto: [],
+    hasMusics: false,
     artistName: '',
     collectionName: '',
   };
@@ -22,7 +22,6 @@ getMusicsFromAlbum = async () => {
   const { match: { params: { id } } } = this.props;
   const returnMusicsAPI = await getMusics(id);
   this.setState({ arrayMusics: returnMusicsAPI, hasMusics: true });
-  // console.log(returnMusicsAPI);
   this.arrayMusicsFiltrado();
 };
 
@@ -36,8 +35,8 @@ arrayMusicsFiltrado = () => {
 }
 
 render() {
-  const { hasMusics, artistName, collectionName, arrayMusicsCerto } = this.state;
-  console.log(arrayMusicsCerto[0]);
+  const { hasMusics, artistName, collectionName,
+    arrayMusicsCerto } = this.state;
   if (arrayMusicsCerto.length === 0) {
     return <Loading />;
   }
@@ -47,9 +46,9 @@ render() {
       <div data-testid="page-album">
         <p data-testid="artist-name">{ artistName }</p>
         <p data-testid="album-name">{ collectionName }</p>
-        { hasMusics && (arrayMusicsCerto.map((musicas) => (
-          <div key={ musicas.trackId }>
-            <MusicCard musicas={ musicas } />
+        { hasMusics && (arrayMusicsCerto.map((musica) => (
+          <div key={ musica.trackId }>
+            <MusicCard musica={ musica } />
           </div>
         ))) }
       </div>
