@@ -17,7 +17,7 @@ class MusicCard extends Component {
     const { musica } = this.props;
     const returnFavoritas = await getFavoriteSongs();
     if (returnFavoritas.some((favorita) => favorita.trackId === musica.trackId)) { // avalia se a musica mostrada é igual a musica que está favoritada
-      return this.setState({ isChecked: true });
+      return this.setState({ isChecked: true }); // ja inicia com o favorito marcado
     }
   }
 
